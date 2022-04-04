@@ -19,5 +19,15 @@ services:
     volumes:
        - ./ui:/usr/src/app/ui
        - /usr/src/app/ui/node_modules
+  recipe-db:
+    image: couchdb
+    ports:
+      - "5984:5984"
+    container_name: recipe-db
+    volumes:
+      - ./couchdb/data:/opt/couchdb/data
+    environment:
+      - COUCHDB_USER=recipeuser
+      - COUCHDB_PASSWORD=hMhd3JuGMSXp9c4u
 
 ######## Other containers #########
