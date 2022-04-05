@@ -29,5 +29,3 @@ services:
     environment:
       - COUCHDB_USER=recipeuser
       - COUCHDB_PASSWORD=hMhd3JuGMSXp9c4u
-
-######## Other containers #########
