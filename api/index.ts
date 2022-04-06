@@ -4,6 +4,7 @@ import express, { Request, Response } from "express";
 import nano, * as Nano from 'nano'
 import { dbName, dbPassword, dbUser, dbHost } from "./constants/db";
 import { Recipe } from "./models/recipe";
+import { justNames } from "./src/utils";
 
 const app = express();
 
@@ -13,6 +14,7 @@ export class Application {
     this.setupApplicationSettings();
     this.setupControllers();
     const connection = nano(`http://${dbUser}:${dbPassword}@${dbHost}:5984`);
+    connection.db.create(dbName);
     this.db = connection.db.use(dbName);
   }
 
@@ -29,8 +31,8 @@ export class Application {
   setupControllers() {
     app.get("/recipes", async(req: Request, res: Response) => {
       try {
-        const recipes = await this.db.list();
-        res.status(200).send(recipes);
+        const data = await this.db.list();
+        res.status(200).send(justNames(data));
       } catch (e) {
         res.status(400).send(e.message);
       };

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import config from "../../config";
 import { Ingredient } from "../../interfaces/ingredient";
-import { Recipe } from "../../interfaces/recipe";
 
 export default function DisplayRecipe(props: any) {
   const [name, setName] = useState([]);
@@ -24,11 +23,9 @@ export default function DisplayRecipe(props: any) {
     fetchData();
   }, []);
 
-  return (
-      <div>
+      return <div>
         <h2>{name}</h2>
         <div>{ingredients.map((i: Ingredient) => <div><span>{i.name}</span><span>{i.quantity}</span></div>)}</div>
         <div>{method.map(m => <div>{m}</div>)}</div>
       </div>
-  )
 }

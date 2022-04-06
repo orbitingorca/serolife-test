@@ -1,0 +1,10 @@
+
+.box {
+    margin: 10px;
+    padding: 10px;
+    background-color: aliceblue;
+}
+
+.hide {
+    display: none;
+}
