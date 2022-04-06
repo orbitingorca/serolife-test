@@ -66,3 +66,7 @@
 .ingredient div:last-child {
   flex-basis: 30px;
 }
+
+.submit-button {
+  margin-top: 20px;
+}

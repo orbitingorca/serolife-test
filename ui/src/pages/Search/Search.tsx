@@ -47,7 +47,7 @@ export class Search extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input type="text" value={this.state.searchTerm} onChange={this.handleChange} />
+              <input type="text" value={this.state.searchTerm} onChange={this.handleChange} placeholder="Recipe Name"/>
             </label>
             <input type="submit" value="Search By Name" />
           </form>
@@ -55,10 +55,10 @@ export class Search extends React.Component {
             <div className={`${this.state.go?"hide":""} search-result`}>
               {!this.state.go && this.state.searchResults && <h4>Found:</h4>}
               {!this.state.go && this.state.searchResults.map((r: string) => {
-                return <div onClick={() => this.pickRecipe(r)}>{r}</div>
+                return <button onClick={() => this.pickRecipe(r)}>{r}</button>
               })}
             </div>
-            <div className="display-recipe">
+            <div>
                 {this.state.go && <DisplayRecipe recipe={this.state.picked}></DisplayRecipe>}
             </div>
           </div>

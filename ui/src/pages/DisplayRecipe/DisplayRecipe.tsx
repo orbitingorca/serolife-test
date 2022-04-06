@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import config from "../../config";
 import { Ingredient } from "../../interfaces/ingredient";
+import './DisplayRecipe.css';
 
 export default function DisplayRecipe(props: any) {
   const [name, setName] = useState([]);
@@ -23,9 +24,20 @@ export default function DisplayRecipe(props: any) {
     fetchData();
   }, []);
 
-      return <div>
-        <h2>{name}</h2>
-        <div>{ingredients.map((i: Ingredient) => <div><span>{i.name}</span><span>{i.quantity}</span></div>)}</div>
-        <div>{method.map(m => <div>{m}</div>)}</div>
+  return loading ?
+    <div>Loading...</div>
+    :
+    <div className="display-recipe">
+      <h2>{name}</h2>
+      <div>
+        <div className="ingredients">
+          <h4>Ingredients</h4>
+          {ingredients.map((i: Ingredient) => <div><span>{i.name}</span><span>{i.quantity}</span></div>)}
+        </div>
+        <div className="method">
+          <h4>Method</h4>
+          {method.map(m => <div>{m}</div>)}
+        </div>
       </div>
+    </div>
 }

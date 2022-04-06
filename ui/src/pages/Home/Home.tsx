@@ -6,9 +6,7 @@ export const Home = () => {
   return (
     <div>
       <h1>Recipe App</h1>
-      <h2>Search</h2>
       <Search></Search>
-      <h2>Add</h2>
       <AddRecipe></AddRecipe>
     </div>
   );

@@ -27,7 +27,7 @@ export default () => {
 
     return (
   <Popup
-    trigger={<button className="button"> Open Modal </button>}
+    trigger={<button className="button">Add New Recipe</button>}
     modal
     nested
   >
@@ -69,7 +69,7 @@ export default () => {
               <textarea {...register("method")} />
             </div>
             
-            <input type="submit"/>
+            <input className="submit-button" value="Add Recipe" type="submit"/>
           </form>
         </div>
         </div>
@@ -77,11 +77,10 @@ export default () => {
           <button
             className="button"
             onClick={(event) => {
-              console.log('modal closed ');
               close(event);
             }}
           >
-            close modal
+            Close 
           </button>
         </div>
       </div>

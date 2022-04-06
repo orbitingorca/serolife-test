@@ -8,3 +8,10 @@
 .hide {
     display: none;
 }
+
+.search-result button {
+    display: block;
+    margin: 10px;
+    min-width: 100px;
+}
+
