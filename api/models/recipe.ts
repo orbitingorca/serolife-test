@@ -1,4 +1,5 @@
 import * as Nano from 'nano'
+import {Ingredient} from '../interfaces/ingredient';
 
 interface RecipeInterface extends Nano.MaybeDocument {
     name: string,
@@ -10,11 +11,13 @@ export class Recipe implements RecipeInterface {
     _rev: string
     name: string
     method: Array<string>
+    ingredients: Array<Ingredient>
   
-    constructor(name: string, method: Array<string>) {
-      this._id = undefined
-      this._rev = undefined
-      this.name = name
-      this.method = method
+    constructor(body) {
+      this._id = undefined;
+      this._rev = undefined;
+      this.name = body.name;
+      this.method = body.method;
+      this.ingredients = body.ingredients;
     }
 }

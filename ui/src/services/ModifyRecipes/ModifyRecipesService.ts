@@ -1,12 +1,14 @@
 import config from "../../config.js";
-export class ModifyRecipe {
+import {Recipe} from "../../interfaces/recipe"
+export class ModifyRecipeService {
 
-    postNew(data) {
-        const formatedData = {
+    postNew(data: any) {
+        const recipe: Recipe = {
             name: data.name,
-            method: data.method.split("\n")
+            method: data.method.split("\n"),
+            ingredients: data.ingredients
         }
-        return this.postData(config.api.recipesUrl, formatedData);
+        return this.postData(config.api.recipesUrl, recipe);
     }
 
     async postData(url = '', data = {}) {

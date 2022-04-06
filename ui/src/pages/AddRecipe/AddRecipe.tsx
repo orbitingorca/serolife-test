@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ModifyRecipe } from '../../services/ModifyRecipes/ModifyRecipes';
+import { ModifyRecipeService } from '../../services/ModifyRecipes/ModifyRecipesService';
 
 import './AddRecipe.css';
+import {Ingredient} from '../../interfaces/ingredient'
 
 export default () => {
-    const newRecipe = new ModifyRecipe();
+    const modifyRecipeService = new ModifyRecipeService();
+    const emptyIngredient = {name: "", quantity: 0};
+    const [newIngredient, setData] = useState([emptyIngredient]);
+    const addIngredient = () => {
+      newIngredient.push(emptyIngredient);
+      setData(newIngredient);
+    }
+
     type Inputs = {
         name: string,
         method: Array<string>,
+        ingredients: Array<Ingredient>
     };
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = data => {
-        console.log(data); 
-        newRecipe.postNew(data);
+        modifyRecipeService.postNew(data);
     }
+
     return (
   <Popup
     trigger={<button className="button"> Open Modal </button>}
@@ -27,37 +36,44 @@ export default () => {
         <button className="close" onClick={close}>
           &times;
         </button>
-        <div className="header"> Modal Title </div>
+        <div className="header">Add new recipe</div>
         <div className="content">
           {' '}
-          <div className="wrapper">
-      <h1>Entry new Recipe</h1>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <input defaultValue="New Recipe" {...register("name", { required: true })} />
-      
-      {/* include validation with required or other standard HTML validation rules */}
-      <textarea {...register("method")} />
-      {/* errors will return when field validation fails  */}
-      {errors.name && <span>This field is required</span>}
-      
-      <input type="submit"/>
-    </form>
-    </div>
+        <div className="wrapper">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* register your input into the hook by invoking the "register" function */}
+            <h2>Recipe Name</h2>
+            <div>
+              <input defaultValue="New Recipe" {...register("name", { required: true })} />
+            </div>
+            
+            {/* include validation with required or other standard HTML validation rules */}
+            <h2>Ingredients</h2>
+            <div className="ingredient">
+              <div><h4>Name</h4></div>
+              <div><h4>Amount</h4></div>
+            </div>
+            <div>
+              {newIngredient.map((_, index) => (
+                <div className="ingredient">
+                  <div><input {...register(`ingredients.${index}.name`)}></input></div>
+                  <div><input {...register(`ingredients.${index}.quantity`)}></input></div>
+                </div>
+              ))}
+            </div>
+            <button onClick={addIngredient}>Add Ingredient</button>
+            {/* errors will return when field validation fails  */}
+            {errors.name && <span>This field is required</span>}
+            <h2>Method</h2>
+            <div>
+              <textarea {...register("method")} />
+            </div>
+            
+            <input type="submit"/>
+          </form>
+        </div>
         </div>
         <div className="actions">
-          <Popup
-            trigger={<button className="button"> Trigger </button>}
-            position="top center"
-            nested
-          >
-            <span>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae
-              magni omnis delectus nemo, maxime molestiae dolorem numquam
-              mollitia, voluptate ea, accusamus excepturi deleniti ratione
-              sapiente! Laudantium, aperiam doloribus. Odit, aut.
-            </span>
-          </Popup>
           <button
             className="button"
             onClick={(event) => {

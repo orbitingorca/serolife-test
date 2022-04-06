@@ -45,7 +45,7 @@ export class Application {
     });
 
     app.post("/recipes", (req: Request, res: Response) => {
-      const recipe = new Recipe(req.body.name, req.body.method);
+      const recipe = new Recipe(req.body);
       this.db.insert(recipe, req.body.name).then((n: any) => {
         res.status(200).send("worked");
       }).catch((e: Error) => {
@@ -56,13 +56,11 @@ export class Application {
     app.delete("/recipes/:id", async(req: Request, res: Response) => {
       try {
         const rev = await this.db.get(req.params.id);
-        console.log({rev})
         res.status(200).send(await this.db.destroy(req.params.id, rev._rev));
       } catch (e) {
         res.status(400).send(e.message);
       };
     });
-    app;
   }
 }
 
