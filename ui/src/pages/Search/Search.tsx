@@ -2,7 +2,6 @@ import React from 'react';
 import DisplayRecipe from '../DisplayRecipe/DisplayRecipe';
 import { SearchService } from '../../services/Search/SearchService';
 import "./Search.css";
-import { classicNameResolver } from 'typescript';
 
 export class Search extends React.Component {
 

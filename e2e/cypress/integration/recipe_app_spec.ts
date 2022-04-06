@@ -36,17 +36,35 @@ describe("Recipe tests", () => {
     cy.get('input.submit-button').click();
     cy.get('button').contains('Close').click();
     cy.get('@addRecipe').then((data: any) => {
-      const body=data.request.body;
+      const body = data.request.body;
       expect(body).to.deep.equal(recipe);
     });
   });
 
-  xit(`Given I want to look for a recipe
+  it(`Given I want to look for a recipe
       When I search by the name of the recipe
       Then I find the recipe
       And I can see the ingredients
       And I can see the cooking methods`, () => {
-    expect(true).to.eq(false);
+        cy.get('input[type=text]').type('Tara');
+        cy.intercept('GET', '/recipes', {
+          statusCode: 200,
+          body: [recipe.name, 'Curry'],
+        }).as('searchRecipe');
+        cy.get('input[type=submit]').click();
+        cy.get('@searchRecipe').then((data: any) => {
+          expect(data).to.not.empty;
+        });
+        cy.intercept('GET', '/recipes/' + recipe.name, {
+          statusCode: 200,
+          body: recipe
+        }).as('getRecipe');
+        cy.get('button').contains(recipe.name).click();
+        cy.get('@getRecipe');
+        recipe.ingredients.forEach((i, index) => {
+          cy.get('.ingredients').contains(recipe.ingredients[index].name);
+        });
+        cy.get('.method').contains(recipe.method[0]);
   });
 
   xit(`Given I want to look for a recipe by ingredients
