@@ -2,6 +2,9 @@ install:
 	npm install
 
 docker:
+	docker compose up
+
+dockerandy:
 	sudo docker-compose up
 
 test:

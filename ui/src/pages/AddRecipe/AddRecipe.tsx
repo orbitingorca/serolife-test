@@ -10,11 +10,10 @@ import config from '../../config';
 export default () => {
     const modifyRecipeService = new ModifyRecipeService();
     const emptyIngredient = {name: "", quantity: 0};
-    const [newIngredient, setIngredients] = useState([emptyIngredient]);
+    const [newIngredient, setIngredients] = useState([{...emptyIngredient}]);
     const [httpError, setHttpError] = useState("");
     const addIngredient = () => {
-      newIngredient.push(emptyIngredient);
-      setIngredients(newIngredient);
+      setIngredients([...newIngredient, emptyIngredient]);
     }
 
     type Inputs = {
@@ -57,14 +56,14 @@ export default () => {
               <div><h4>Amount</h4></div>
             </div>
             <div>
-              {newIngredient.map((_, index) => (
-                <div className="ingredient">
+              {newIngredient.map((ingredient, index) => (
+                <div className="ingredient" key={index}>
                   <div><input {...register(`ingredients.${index}.name`)}></input></div>
                   <div><input {...register(`ingredients.${index}.quantity`)}></input></div>
                 </div>
               ))}
             </div>
-            <button onClick={addIngredient}>Add Ingredient</button>
+            <button type="button" onClick={addIngredient}>Add Ingredient</button>
             <h2>Method</h2>
             <div>
               <textarea {...register("method")} />

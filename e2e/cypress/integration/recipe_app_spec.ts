@@ -1,16 +1,9 @@
-const recipe = {
-  name: "Taramasalata",
-  method: ["Mix with Mortar and pestle"],
-  ingredients: [
-    {name: "Tarama", quantity: "1"},
-    {name: "bread crumbs", quantity: "1000"},
-    {name: "lemon juice", quantity: "1"},
-  ]
-}
+let recipe;
 
 describe("Recipe tests", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");
+    cy.fixture("recipe").then(data => recipe=data)
   })
   it(`Given I have a new recipe
       When I add the new recipe name

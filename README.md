@@ -1,3 +1,9 @@
+# Completion Notes
+
+This is my first React app.
+First two user stories complete including e2e tests
+
+
 # Recipe app
 ## Introduction
 Feel free to [use this repository as a template](../../generate) (Please don't fork!) or start from scractch.

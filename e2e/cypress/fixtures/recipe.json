@@ -1,0 +1,9 @@
+{
+  "name": "Taramasalata",
+  "method": ["Mix with Mortar and pestle"],
+  "ingredients": [
+    {"name": "Tarama", "quantity": "1"},
+    {"name": "bread crumbs", "quantity": "1000"},
+    {"name": "lemon juice", "quantity": "1"}
+  ]
+}
