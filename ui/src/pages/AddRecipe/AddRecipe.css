@@ -56,6 +56,7 @@
 
 .ingredient {
   display: flex;
+  margin-bottom: 5px;
 }
 .ingredient input {
   width: 100%;
@@ -69,4 +70,11 @@
 
 .submit-button {
   margin-top: 20px;
+}
+
+.http-error {
+  color: red;
+}
+.http-error:empty {
+  display: none;
 }

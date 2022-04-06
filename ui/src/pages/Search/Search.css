@@ -15,3 +15,6 @@
     min-width: 100px;
 }
 
+form > input, form > label {
+    margin: 5px;
+}

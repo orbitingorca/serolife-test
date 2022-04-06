@@ -15,5 +15,8 @@ const dev = {
     : dev;
   
   export default {
-    ...config
-  };
+    ...config,
+    httpErrors: {
+      "409": "Recipe With that name already exists" 
+    }
+  } as any;

@@ -5,14 +5,16 @@ import { ModifyRecipeService } from '../../services/ModifyRecipes/ModifyRecipesS
 
 import './AddRecipe.css';
 import {Ingredient} from '../../interfaces/ingredient'
+import config from '../../config';
 
 export default () => {
     const modifyRecipeService = new ModifyRecipeService();
     const emptyIngredient = {name: "", quantity: 0};
-    const [newIngredient, setData] = useState([emptyIngredient]);
+    const [newIngredient, setIngredients] = useState([emptyIngredient]);
+    const [httpError, setHttpError] = useState("");
     const addIngredient = () => {
       newIngredient.push(emptyIngredient);
-      setData(newIngredient);
+      setIngredients(newIngredient);
     }
 
     type Inputs = {
@@ -22,7 +24,9 @@ export default () => {
     };
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = data => {
-        modifyRecipeService.postNew(data);
+      modifyRecipeService.postNew(data)
+        .then(() => setHttpError(''))
+        .catch(e => setHttpError(config.httpErrors[e.status as string] ? config.httpErrors[e.status]: e.statusText));
     }
 
     return (
@@ -41,13 +45,12 @@ export default () => {
           {' '}
         <div className="wrapper">
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
             <h2>Recipe Name</h2>
             <div>
               <input {...register("name", { required: true })} />
             </div>
             
-            {/* include validation with required or other standard HTML validation rules */}
+            {errors.name && <span>This field is required</span>}
             <h2>Ingredients</h2>
             <div className="ingredient">
               <div><h4>Name</h4></div>
@@ -62,8 +65,6 @@ export default () => {
               ))}
             </div>
             <button onClick={addIngredient}>Add Ingredient</button>
-            {/* errors will return when field validation fails  */}
-            {errors.name && <span>This field is required</span>}
             <h2>Method</h2>
             <div>
               <textarea {...register("method")} />
@@ -71,6 +72,7 @@ export default () => {
             
             <input className="submit-button" value="Add Recipe" type="submit"/>
           </form>
+          <div className="http-error">{httpError}</div>
         </div>
         </div>
         <div className="actions">

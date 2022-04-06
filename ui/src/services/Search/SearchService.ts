@@ -10,7 +10,7 @@ export class SearchService {
         }
     }
 
-    async getList(url = '') {
+    private async getList(url = '') {
         const response = await fetch(url, {
             method: 'GET',
         });

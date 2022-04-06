@@ -29,38 +29,36 @@ export class Application {
   }
 
   setupControllers() {
-    app.get("/recipes", async(req: Request, res: Response) => {
+    app.get("/recipes", async(req: Request, res: Response, next: Function) => {
       try {
         const data = await this.db.list();
         res.status(200).send(justNames(data));
       } catch (e) {
-        res.status(400).send(e.message);
+        next();
       };
     });
 
-    app.get("/recipes/:id", async(req: Request, res: Response) => {
+    app.get("/recipes/:id", async(req: Request, res: Response, next: Function) => {
       try {
         res.status(200).send(await this.db.get(req.params.id));
       } catch (e) {
-        res.status(400).send(e.message);
+        next();
       };
     });
 
-    app.post("/recipes", (req: Request, res: Response) => {
+    app.post("/recipes", (req: Request, res: Response, next: Function) => {
       const recipe = new Recipe(req.body);
       this.db.insert(recipe, req.body.name).then((n: any) => {
         res.status(200).send("worked");
-      }).catch((e: Error) => {
-        res.status(400).send(e.message);
-      });
+      }).catch(next);
     });
 
-    app.delete("/recipes/:id", async(req: Request, res: Response) => {
+    app.delete("/recipes/:id", async(req: Request, res: Response, next: Function) => {
       try {
         const rev = await this.db.get(req.params.id);
         res.status(200).send(await this.db.destroy(req.params.id, rev._rev));
       } catch (e) {
-        res.status(400).send(e.message);
+        next();
       };
     });
   }
