@@ -44,7 +44,7 @@ export default () => {
             {/* register your input into the hook by invoking the "register" function */}
             <h2>Recipe Name</h2>
             <div>
-              <input defaultValue="New Recipe" {...register("name", { required: true })} />
+              <input {...register("name", { required: true })} />
             </div>
             
             {/* include validation with required or other standard HTML validation rules */}
